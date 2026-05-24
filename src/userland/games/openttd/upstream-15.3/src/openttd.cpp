@@ -92,7 +92,7 @@
 extern "C" {
 #include "libc/syscall_user.h"
 }
-#define BOREDOS_STARTUP_LOG(message) sys_serial_write(message)
+#define BOREDOS_STARTUP_LOG(message) ((void)0)
 #else
 #define BOREDOS_STARTUP_LOG(message) ((void)0)
 #endif

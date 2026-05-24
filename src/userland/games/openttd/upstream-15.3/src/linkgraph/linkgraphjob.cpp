@@ -108,7 +108,6 @@ LinkGraphJob::~LinkGraphJob()
 	uint16_t size = this->Size();
 #if defined(BOREDOS)
 	if (this->nodes.size() < size) {
-		sys_serial_write("[OpenTTD] skipping incomplete link graph job cleanup\n");
 		return;
 	}
 #endif

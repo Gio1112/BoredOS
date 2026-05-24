@@ -28,7 +28,7 @@
 extern "C" {
 #include "libc/syscall_user.h"
 }
-#define BOREDOS_COORDINATOR_LOG(message) sys_serial_write(message)
+#define BOREDOS_COORDINATOR_LOG(message) ((void)0)
 
 static bool BoredOSConnectionStringLooksIPv6(std::string_view connection_string)
 {

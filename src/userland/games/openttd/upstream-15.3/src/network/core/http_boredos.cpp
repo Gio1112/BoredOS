@@ -111,7 +111,6 @@ static bool BoredOSProxyConnect(int *out_fd)
 			}
 			if ((mask & 2) != 0) {
 				*out_fd = fd;
-				sys_serial_write("[OpenTTD HTTP] host proxy connected\n");
 				return true;
 			}
 			sys_yield();
@@ -145,21 +144,9 @@ static void BoredOSWriteSizeLine(char *out, size_t out_len, size_t value)
 
 static void BoredOSLogSize(const char *prefix, size_t value, const char *suffix)
 {
-	char buf[96];
-	size_t pos = 0;
-	while (prefix != nullptr && *prefix != '\0' && pos + 1 < sizeof(buf)) buf[pos++] = *prefix++;
-
-	char digits[24];
-	size_t digit_count = 0;
-	do {
-		digits[digit_count++] = (char)('0' + (value % 10U));
-		value /= 10U;
-	} while (value != 0 && digit_count < sizeof(digits));
-	while (digit_count > 0 && pos + 1 < sizeof(buf)) buf[pos++] = digits[--digit_count];
-
-	while (suffix != nullptr && *suffix != '\0' && pos + 1 < sizeof(buf)) buf[pos++] = *suffix++;
-	buf[pos] = '\0';
-	sys_serial_write(buf);
+	(void)prefix;
+	(void)value;
+	(void)suffix;
 }
 
 /* static */ void NetworkHTTPSocketHandler::Connect(std::string_view uri, HTTPCallback *callback, std::string &&data)

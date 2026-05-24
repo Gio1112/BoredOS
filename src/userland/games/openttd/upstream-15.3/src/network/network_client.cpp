@@ -35,7 +35,7 @@
 
 #if defined(BOREDOS)
 #include "libc/syscall_user.h"
-#define BOREDOS_CLIENT_LOG(message) sys_serial_write(message)
+#define BOREDOS_CLIENT_LOG(message) ((void)0)
 
 static bool BoredOSClientProxySendAll(int fd, const uint8_t *data, size_t len)
 {

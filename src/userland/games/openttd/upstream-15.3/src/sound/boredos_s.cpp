@@ -22,6 +22,5 @@ static FSoundDriver_BoredOS iFSoundDriver_BoredOS;
 std::optional<std::string_view> SoundDriver_BoredOS::Start(const StringList &)
 {
 	MxInitialize(11025);
-	sys_serial_write("[OpenTTD] BoredOS PC speaker sound driver selected\n");
 	return std::nullopt;
 }

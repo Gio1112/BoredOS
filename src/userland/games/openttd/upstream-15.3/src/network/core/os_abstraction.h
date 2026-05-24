@@ -280,14 +280,10 @@ inline void boredos_dns_cache_put(const char *node, const net_ipv4_address_t *ip
 inline bool boredos_dns_lookup_retry(const char *node, net_ipv4_address_t *ip)
 {
 	if (boredos_dns_cache_get(node, ip)) {
-		sys_serial_write("[OpenTTD NET] DNS cache hit\n");
 		return true;
 	}
 
 	for (int attempt = 0; attempt < 3; attempt++) {
-		sys_serial_write("[OpenTTD NET] DNS lookup host: ");
-		sys_serial_write(node);
-		sys_serial_write("\n");
 		sys_network_poll();
 		if (sys_dns_lookup(node, ip) == 0) {
 			boredos_dns_cache_put(node, ip);
@@ -338,7 +334,6 @@ inline int connect(SOCKET s, const struct sockaddr *addr, socklen_t len)
 	ip.bytes[2] = (uint8_t)((host_addr >> 8) & 0xFF);
 	ip.bytes[3] = (uint8_t)(host_addr & 0xFF);
 
-	sys_serial_write("[OpenTTD NET] tcp connect begin\n");
 	sys_network_poll();
 	if (sys_socket_connect_start(s, &ip, ntohs(in->sin_port)) != 0) {
 		sys_serial_write("[OpenTTD NET] tcp connect failed\n");
@@ -346,7 +341,6 @@ inline int connect(SOCKET s, const struct sockaddr *addr, socklen_t len)
 		return -1;
 	}
 	sys_network_poll();
-	sys_serial_write("[OpenTTD NET] tcp connect started\n");
 	errno = EINPROGRESS;
 	return -1;
 }
@@ -459,18 +453,15 @@ inline int getaddrinfo(const char *node, const char *service, const struct addri
 	net_ipv4_address_t ip{};
 	if (node == nullptr) return EAI_FAIL;
 	if (boredos_looks_ipv6_literal(node)) {
-		sys_serial_write("[OpenTTD NET] IPv6 address skipped on BoredOS\n");
 		return EAI_FAIL;
 	}
 	if (!boredos_parse_ipv4_literal(node, &ip)) {
 		if (!boredos_ensure_network()) return EAI_FAIL;
-		sys_serial_write("[OpenTTD NET] DNS lookup begin\n");
 		if (!boredos_dns_lookup_retry(node, &ip)) {
 			sys_serial_write("[OpenTTD NET] DNS lookup failed\n");
 			return EAI_FAIL;
 		}
 		sys_network_poll();
-		sys_serial_write("[OpenTTD NET] DNS lookup ok\n");
 	}
 
 	addrinfo *ai = static_cast<addrinfo *>(malloc(sizeof(addrinfo)));

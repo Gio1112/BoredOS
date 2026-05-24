@@ -29,7 +29,6 @@ typedef struct {
 extern "C" void *ottd_boredos_window_create(const char *title, int width, int height)
 {
     if (width <= 0 || height <= 0) return 0;
-    sys_serial_write("[OpenTTD] creating BoredOS window\n");
 
     OpenTTDBoredOSWindow *window = (OpenTTDBoredOSWindow *)malloc(sizeof(OpenTTDBoredOSWindow));
     if (window == 0) {
@@ -47,7 +46,6 @@ extern "C" void *ottd_boredos_window_create(const char *title, int width, int he
     window->width = width;
     window->height = height;
     ui_window_set_resizable(window->window, true);
-    sys_serial_write("[OpenTTD] BoredOS window created\n");
     return window;
 }
 

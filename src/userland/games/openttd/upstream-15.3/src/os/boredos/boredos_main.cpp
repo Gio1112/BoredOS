@@ -23,8 +23,6 @@ extern "C" uint32_t openttd_boredos_ticks_ms(void);
 
 int CDECL main(int argc, char *argv[])
 {
-	sys_serial_write("[OpenTTD] BoredOS upstream entry\n");
-
 	std::vector<std::string_view> params;
 	for (int i = 0; i < argc; ++i) {
 		StrMakeValidInPlace(argv[i]);
@@ -49,6 +47,5 @@ int CDECL main(int argc, char *argv[])
 
 	CrashLog::InitialiseCrashLog();
 	SetRandomSeed(openttd_boredos_ticks_ms());
-	sys_serial_write("[OpenTTD] launching core with BoredOS video/audio\n");
 	return openttd_main(params);
 }

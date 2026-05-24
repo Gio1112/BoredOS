@@ -93,9 +93,6 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
 
-    printf("OpenTTD/BoredOS port launcher starting\n");
-    printf("video=boredos sound=null music=null network=disabled threads=disabled\n");
-
     BoredOSVideo video;
     video.window = 0;
     video.pixels = 0;

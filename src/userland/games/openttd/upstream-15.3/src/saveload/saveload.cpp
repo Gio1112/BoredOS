@@ -86,12 +86,7 @@ static bool _boredos_saveload_error_active = false;
 
 static void BoredOSLogSavegameTag(uint32_t tag)
 {
-	char msg[] = "[OpenTTD NET] savegame tag: ....\n";
-	msg[28] = (char)((tag >> 24) & 0xFF);
-	msg[29] = (char)((tag >> 16) & 0xFF);
-	msg[30] = (char)((tag >> 8) & 0xFF);
-	msg[31] = (char)(tag & 0xFF);
-	BoredOSSerialWrite(msg);
+	(void)tag;
 }
 #else
 #define BoredOSLogSavegameTag(tag) ((void)0)

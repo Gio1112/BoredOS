@@ -44,7 +44,7 @@
 
 #if defined(BOREDOS)
 #	include "libc/syscall_user.h"
-#	define BOREDOS_CONTENT_LOG(message) sys_serial_write(message)
+#	define BOREDOS_CONTENT_LOG(message) ((void)0)
 #else
 #	define BOREDOS_CONTENT_LOG(message) ((void)0)
 #endif
