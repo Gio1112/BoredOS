@@ -1,12 +1,11 @@
 # Copyright (c) 2023-2026 Christiaan (chris@boreddev.nl)
 # This software is released under the GNU General Public License v3.0. See LICENSE file for details.
 # This header needs to maintain in any file it is present in, as per the GPL license terms.
-CROSS_BIN := $(firstword $(dir $(shell command -v x86_64-elf-gcc 2>/dev/null)) $(if $(wildcard /home/linuxbrew/.linuxbrew/bin/x86_64-elf-gcc),/home/linuxbrew/.linuxbrew/bin/))
-CC = $(CROSS_BIN)x86_64-elf-gcc
-CXX = $(CROSS_BIN)x86_64-elf-g++
+CC = x86_64-elf-gcc
+CXX = x86_64-elf-g++
 AS = nasm
-LD = $(CROSS_BIN)x86_64-elf-ld
-AR := $(if $(wildcard $(CROSS_BIN)x86_64-elf-ar),$(CROSS_BIN)x86_64-elf-ar,ar)
+LD = x86_64-elf-ld
+AR = x86_64-elf-ar
 
 CFLAGS = -Wall -Wextra -std=gnu11 -ffreestanding -O2 -fno-stack-protector -fno-stack-check -fno-lto -fno-pie -m64 -march=x86-64 -mno-red-zone -Wa,--noexecstack -I. -Ilibc -I../sys -I../wm
 CXXFLAGS = -Wall -Wextra -ffreestanding -O2 -fno-stack-protector -fno-stack-check -fno-lto -fno-pie -m64 -march=x86-64 -mno-red-zone -fno-exceptions -fno-rtti -Wa,--noexecstack -I. -Ilibc -I../sys -I../wm
