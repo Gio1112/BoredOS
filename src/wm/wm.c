@@ -2579,16 +2579,22 @@ static Window *wm_top_opaque_client_covering_region(int x, int y, int w, int h) 
     for (int i = sorted_window_count_cache - 1; i >= 0; i--) {
         Window *win = sorted_windows_cache[i];
         if (!win || !win->visible) continue;
-        if (!win->client_opaque || (!win->comp_pixels && !win->pixels)) return NULL;
+
+        if (x + w <= win->x || x >= win->x + win->w ||
+            y + h <= win->y || y >= win->y + win->h) {
+            continue;
+        }
 
         int client_x1 = win->x;
         int client_y1 = win->y + 20;
         int client_x2 = win->x + win->w;
         int client_y2 = win->y + win->h;
-        if (x >= client_x1 && y >= client_y1 &&
+        if (win->client_opaque && (win->comp_pixels || win->pixels) &&
+            x >= client_x1 && y >= client_y1 &&
             x + w <= client_x2 && y + h <= client_y2) {
             return win;
         }
+
         return NULL;
     }
 
@@ -3460,11 +3466,16 @@ static void wm_handle_mouse_internal(int dx, int dy, uint8_t buttons, int dz) {
         if (new_h < 100) new_h = 100;
         
         if (new_w != drag_window->w || new_h != drag_window->h) {
+            if (drag_window->comp_pixels) {
+                kfree(drag_window->comp_pixels);
+                drag_window->comp_pixels = NULL;
+            }
+            drag_window->client_opaque = false;
+            drag_window->w = new_w;
+            drag_window->h = new_h;
+
             if (drag_window->handle_resize) {
                 drag_window->handle_resize(drag_window, new_w, new_h);
-            } else {
-                drag_window->w = new_w;
-                drag_window->h = new_h;
             }
             
             force_redraw = true;
