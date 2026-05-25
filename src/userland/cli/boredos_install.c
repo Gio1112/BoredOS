@@ -57,7 +57,7 @@ static int copy_file(const char *src, const char *dst) {
     if (!buf) { sys_close(sfd); sys_close(dfd); printf("[ERROR] Out of memory copying: %s\n", dst); return -1; }
     int n;
     while ((n = sys_read(sfd, buf, 65536)) > 0) {
-        if (sys_write_fs(dfd, buf, n) != (uint32_t)n) {
+        if (sys_write_fs(dfd, buf, (uint32_t)n) != n) {
             sys_close(sfd); sys_close(dfd);
             free(buf);
             printf("[ERROR] Write error: %s\n", dst);

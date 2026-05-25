@@ -35,7 +35,7 @@ cmake -S "$UPSTREAM" -B "$HOST_BUILD" \
     -DOPTION_TOOLS_ONLY=ON \
     -DCMAKE_BUILD_TYPE=Release
 
-cmake --build "$HOST_BUILD" --target tools
+env MAKEFLAGS= cmake --build "$HOST_BUILD" --target tools --parallel "${OPENTTD_BUILD_JOBS:-4}"
 
 cmake -S "$UPSTREAM" -B "$BUILD" \
     -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN" \
@@ -50,4 +50,4 @@ cmake -S "$UPSTREAM" -B "$BUILD" \
     -DCMAKE_CXX_STANDARD=23 \
     -DCMAKE_BUILD_TYPE=Release
 
-cmake --build "$BUILD" --target openttd
+env MAKEFLAGS= cmake --build "$BUILD" --target openttd --parallel "${OPENTTD_BUILD_JOBS:-4}"

@@ -934,7 +934,6 @@ static void control_panel_paint_wallpaper(ui_window_t win) {
     button_y += 20;
 
     int list_y = button_y;
-    int list_h = 180;
 
     for (int i = 0; i < wallpaper_count; i++) {
         int tx = (i % 3) * (WALLPAPER_THUMB_W + 15);

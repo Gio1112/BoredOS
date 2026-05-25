@@ -79,16 +79,6 @@ static void md_strcpy(char *dest, const char *src) {
     *dest = 0;
 }
 
-static int md_strncpy(char *dest, const char *src, int n) {
-    int i = 0;
-    while (i < n && src[i]) {
-        dest[i] = src[i];
-        i++;
-    }
-    dest[i] = 0;
-    return i;
-}
-
 static void md_parse_line(const char *raw_line, MDLine *line_out) {
     int i = 0;
     int out_idx = 0;
@@ -296,8 +286,7 @@ static void md_paint(ui_window_t win) {
     int offset_x = 4;
     int offset_y = 0;
     int content_width = win_w - 8;
-    int content_height = win_h - 28;
-    
+
     ui_draw_rounded_rect_filled(win, offset_x, offset_y, content_width, 20, 6, COLOR_DARK_PANEL);
     ui_draw_string(win, offset_x + 4, offset_y + 4, "File", COLOR_DARK_TEXT);
     ui_draw_string(win, offset_x + 50, offset_y + 4, open_filename, COLOR_DARK_TEXT);
@@ -452,7 +441,7 @@ static void md_paint(ui_window_t win) {
                 uint32_t draw_color = (link_idx != -1) ? COLOR_LINK : text_color;
                 
                 if (line->type == MD_LINE_CODE) {
-                    int seg_w = (text_scale != 15.0f) ? ui_get_string_width_scaled(line_segment, text_scale) : segment_len * MD_CHAR_WIDTH;
+                    int seg_w = (text_scale != 15.0f) ? (int)ui_get_string_width_scaled(line_segment, text_scale) : segment_len * MD_CHAR_WIDTH;
                     ui_draw_rect(win, x_offset - 2, current_y - 2, seg_w + 4, 12, COLOR_BLACK);
                 }
                 
@@ -467,7 +456,7 @@ static void md_paint(ui_window_t win) {
                     }
                 }
                 
-                int text_w = (text_scale != 15.0f) ? ui_get_string_width_scaled(line_segment, text_scale) : segment_len * MD_CHAR_WIDTH;
+                int text_w = (text_scale != 15.0f) ? (int)ui_get_string_width_scaled(line_segment, text_scale) : segment_len * MD_CHAR_WIDTH;
                 
                 if (link_idx != -1) {
                     int ul_y = current_y + extra_spacing + (int)text_scale - 2;

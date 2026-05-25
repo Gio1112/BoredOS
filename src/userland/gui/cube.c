@@ -402,12 +402,6 @@ static Face faces[6] = {
 
 static uint32_t *fb = NULL;
 
-static void put_pixel(int x, int y, uint32_t color) {
-    if (x >= 0 && x < WIN_W && y >= 0 && y < WIN_H) {
-        fb[y * WIN_W + x] = color;
-    }
-}
-
 static void fill_triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint32_t color) {
     if (y0 > y1) { int t = y0; y0 = y1; y1 = t; t = x0; x0 = x1; x1 = t; }
     if (y1 > y2) { int t = y1; y1 = y2; y2 = t; t = x1; x1 = x2; x2 = t; }

@@ -260,7 +260,8 @@ int main(int argc, char **argv) {
                 p += kl; while (*p == ':' || *p == '\t' || *p == ' ') p++;
                 return atoi(p);
             }
-            while (*p && *p != '\n') p++; if (*p == '\n') p++;
+            while (*p && *p != '\n') p++;
+            if (*p == '\n') p++;
         }
         return 0;
     }
@@ -275,7 +276,8 @@ int main(int argc, char **argv) {
                 out[i] = 0;
                 return;
             }
-            while (*p && *p != '\n') p++; if (*p == '\n') p++;
+            while (*p && *p != '\n') p++;
+            if (*p == '\n') p++;
         }
         strcpy(out, "Unknown");
     }

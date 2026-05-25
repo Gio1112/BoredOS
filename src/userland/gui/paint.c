@@ -37,14 +37,6 @@ static void paint_strcpy(char *dest, const char *src) {
     *dest = 0;
 }
 
-static void debug_print(const char *msg) {
-    sys_write(1, msg, 0);
-    int i = 0;
-    while (msg[i]) i++;
-    sys_write(1, msg, i);
-    sys_write(1, "\n", 1);
-}
-
 static void paint_reset(void) {
     if (canvas_buffer) {
         for (int i = 0; i < CANVAS_W * CANVAS_H; i++) {
@@ -86,6 +78,7 @@ static void paint_paint(ui_window_t win) {
 }
 
 static void paint_put_brush(ui_window_t win, int cx, int cy, int *min_x, int *min_y, int *max_x, int *max_y) {
+    (void)win;
     if (!canvas_buffer) return;
     for (int dy = 0; dy < 2; dy++) {
         for (int dx = 0; dx < 2; dx++) {
@@ -151,7 +144,8 @@ void paint_reset_last_pos(void) {
 
 
 static void wm_show_message(const char *title, const char *msg) {
-
+    (void)title;
+    (void)msg;
 }
 
 static void paint_save(const char *path) {

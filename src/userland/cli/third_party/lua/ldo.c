@@ -142,6 +142,7 @@ l_noret luaD_throw (lua_State *L, TStatus errcode) {
         g->panic(L);  /* call panic function (last chance to jump out) */
       }
       abort();
+      for (;;) {}
     }
   }
 }
@@ -1160,5 +1161,4 @@ TStatus luaD_protectedparser (lua_State *L, ZIO *z, const char *name,
   decnny(L);
   return status;
 }
-
 

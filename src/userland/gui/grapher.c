@@ -245,7 +245,7 @@ static int parse_expr(Token *t, int *p, ASTNode *n, int *nc) {
     return left;
 }
 
-static double eval_ast(ASTNode *n, int idx, double x, double y, double z) {
+static double __attribute__((unused)) eval_ast(ASTNode *n, int idx, double x, double y, double z) {
     if (idx < 0) return 0;
     ASTNode *nd = &n[idx];
     switch (nd->type) {
@@ -563,7 +563,9 @@ static uint32_t apply_shading(uint32_t color, double nx, double ny, double nz) {
     r = (int)(r * intensity);
     g = (int)(g * intensity);
     b = (int)(b * intensity);
-    if (r > 255) r = 255; if (g > 255) g = 255; if (b > 255) b = 255;
+    if (r > 255) r = 255;
+    if (g > 255) g = 255;
+    if (b > 255) b = 255;
     
     return 0xFF000000 | (r << 16) | (g << 8) | b;
 }

@@ -77,8 +77,6 @@ static int best_score = 0;
 
 /* poor-man timer */
 static uint32_t tick_counter = 0;
-static int game_speed_ms = 80; // default (milliseconds per move)
-
 static uint32_t random_seed = 0x1234ABCDu;
 
 static uint32_t random_next(void) {

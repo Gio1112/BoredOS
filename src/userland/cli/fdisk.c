@@ -129,7 +129,6 @@ static void print_partition_table(const char *devname) {
         disk_info_t d;
         if (sys_disk_get_info(i, &d) != 0) continue;
         if (!d.is_partition) continue;
-        char parent[16];
         int len = 0;
         while (devname[len]) len++;
         int match = 1;

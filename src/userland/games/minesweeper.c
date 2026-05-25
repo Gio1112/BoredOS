@@ -16,15 +16,6 @@
 #define COLOR_DARK_TEXT     0xFFE0E0E0
 #define COLOR_TRAFFIC_RED   0xFFFF6B6B
 
-// Debugging helper
-static void debug_print(const char *msg) {
-    sys_write(1, msg, 0);
-    int i = 0;
-    while (msg[i]) i++;
-    sys_write(1, msg, i);
-    sys_write(1, "\n", 1);
-}
-
 // Game constants
 #define GRID_WIDTH 10
 #define GRID_HEIGHT 10
@@ -196,6 +187,7 @@ static void minesweeper_paint(ui_window_t win) {
 }
 
 static void minesweeper_handle_click(ui_window_t win, int x, int y, int button) {
+    (void)win;
     int grid_start_x = 10;
     int grid_start_y = 22;
     int btn_y = grid_start_y + GRID_HEIGHT * CELL_SIZE + 10;

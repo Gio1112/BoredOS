@@ -321,8 +321,10 @@ void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, co
             right -= size;
         }
     }
-    if (base < (void*)right) qsort(base, (right - (char *)base) / size + 1, size, compar);
-    if ((void*)left < (char *)base + nmemb * size) qsort(left, ((char *)base + nmemb * size - left) / size, size, compar);
+    char *base_char = (char *)base;
+    char *end = base_char + nmemb * size;
+    if (base_char < right) qsort(base, (right - base_char) / size + 1, size, compar);
+    if (left < end) qsort(left, (end - left) / size, size, compar);
 }
 
 void itoa(int n, char *buf) {

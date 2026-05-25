@@ -303,11 +303,6 @@ static uint32_t get_tile_color(int value) {
     }
 }
 
-static uint32_t get_tile_text_color(int value) {
-    (void)value;
-    return 0xFF000000; // for visibility
-}
-
 static void int_to_text(int value, char *out) {
     itoa(value, out);
 }
@@ -323,12 +318,6 @@ static void draw_centered_text(ui_window_t win, int x, int y, int w, int h,
     int draw_y = y + (h - (int)text_h) / 2;
 
     ui_draw_string(win, draw_x, draw_y, text, color);
-}
-
-static void draw_button(ui_window_t win, int x, int y, int w, int h,
-                        const char *label, uint32_t color) {
-    ui_draw_rounded_rect_filled(win, x, y, w, h, 6, color);
-    draw_centered_text(win, x, y, w, h, label, COLOR_TEXT, 1.0f);
 }
 
 static void draw_score_box(ui_window_t win, int x, int y, int w, int h,

@@ -38,10 +38,12 @@ vpath %.c cli gui sys games libc net cli/third_party
 vpath %.cpp games
 
 APP_C_SOURCES_FULL = $(wildcard cli/*.c gui/*.c sys/*.c games/*.c *.c net/*.c cli/third_party/*.c)
-APP_C_SOURCES = $(filter-out stb_image.c, $(APP_C_SOURCES_FULL))
+APP_EXCLUDED_C_SOURCES = stb_image.c games/openttd_test.c
+APP_EXCLUDED_CPP_SOURCES = games/openttd_cpp_test.cpp
+APP_C_SOURCES = $(filter-out $(APP_EXCLUDED_C_SOURCES), $(APP_C_SOURCES_FULL))
 APP_C_NAMES = $(basename $(notdir $(APP_C_SOURCES)))
 APP_CPP_SOURCES_FULL = $(wildcard games/*.cpp)
-APP_CPP_SOURCES = $(filter-out $(foreach n,$(APP_C_NAMES),games/$(n).cpp),$(APP_CPP_SOURCES_FULL))
+APP_CPP_SOURCES = $(filter-out $(APP_EXCLUDED_CPP_SOURCES) $(foreach n,$(APP_C_NAMES),games/$(n).cpp),$(APP_CPP_SOURCES_FULL))
 APP_CPP_NAMES = $(basename $(notdir $(APP_CPP_SOURCES)))
 APP_ELFS = $(patsubst %, $(BIN_DIR)/%.elf, $(APP_C_NAMES) $(APP_CPP_NAMES))
 APP_NAMES = $(sort $(APP_C_NAMES) $(APP_CPP_NAMES) doom lua)
@@ -68,7 +70,8 @@ OPENTTD_UPSTREAM_PORT_SOURCES = \
 	$(REPO_ROOT)/tools/build_openttd_boredos_upstream.sh
 
 LUA_DIR = cli/third_party/lua
-LUA_CFLAGS = -std=gnu11 -ffreestanding -O2 -fno-stack-protector -fno-stack-check -fno-lto -fno-pie -m64 -march=x86-64 -mno-red-zone -Wa,--noexecstack -isystem $(LUA_DIR)/sysinclude -I. -Ilibc -I$(LUA_DIR) -DLUA_USE_C89 -Wno-conversion -Wno-sign-conversion -Wno-double-promotion -Wno-unused-parameter -Wno-missing-declarations -Wno-shadow -Wno-undef -Wno-redundant-decls -Wno-old-style-definition -Wno-missing-prototypes -Wno-implicit-fallthrough -Wno-type-limits
+LUA_CFLAGS = -std=gnu11 -ffreestanding -O2 -fno-stack-protector -fno-stack-check -fno-lto -fno-pie -m64 -march=x86-64 -mno-red-zone -Wa,--noexecstack -isystem $(LUA_DIR)/sysinclude -I. -Ilibc -I$(LUA_DIR) -DLUA_USE_C89 -Wno-conversion -Wno-sign-conversion -Wno-double-promotion -Wno-unused-parameter -Wno-missing-declarations -Wno-shadow -Wno-undef -Wno-redundant-decls -Wno-old-style-definition -Wno-missing-prototypes -Wno-implicit-fallthrough -Wno-type-limits -Wno-return-type
+DOOM_CFLAGS = $(CFLAGS) -Wno-error -Wno-unused-parameter -Wno-unused-variable -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-unused-but-set-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-implicit-fallthrough -Wno-type-limits -Wno-redundant-decls -Wno-unterminated-string-initialization -Wno-enum-conversion -Wno-pointer-to-int-cast -Wno-dangling-pointer
 
 all: $(BIN_DIR) $(APP_ELFS) $(BIN_DIR)/doom.elf $(BIN_DIR)/lua.elf $(BIN_DIR)/tcc.elf $(BIN_DIR)/empty.o
 
@@ -96,7 +99,7 @@ $(BIN_DIR)/empty.o: | $(BIN_DIR)
 	rm $(BIN_DIR)/empty.asm
 
 $(BIN_DIR)/%.note.c: $(APP_METADATA_TOOL) | $(BIN_DIR)
-	src="$(call app_source_for,$*)"; \
+	@src="$(call app_source_for,$*)"; \
 	if [ -z "$$src" ] || [ ! -f "$$src" ]; then \
 		echo "error: metadata source not found for app '$*'" >&2; \
 		exit 1; \
@@ -128,7 +131,7 @@ $(BIN_DIR)/screenshot.elf: $(LIBC_OBJS) $(BIN_DIR)/screenshot.o $(BIN_DIR)/scree
 	$(LD) $(LDFLAGS) $^ -o $@
 
 $(BIN_DIR)/%.o: games/doom/%.c | $(BIN_DIR)
-	$(CC) $(CFLAGS) -Wno-error -DBOREDOS -Igames/doom -c $< -o $@
+	$(CC) $(DOOM_CFLAGS) -DBOREDOS -Igames/doom -c $< -o $@
 
 $(BIN_DIR)/doom.elf: $(LIBC_OBJS) $(DOOM_OBJS) $(BIN_DIR)/doom.note.o
 	$(LD) $(LDFLAGS) $^ -o $@

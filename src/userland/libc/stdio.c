@@ -348,20 +348,6 @@ static void _b_utoa(unsigned long long v, unsigned base, int upper, char *buf, s
     }
 }
 
-static void _b_itoa(long long v, char *buf, size_t *len) {
-    unsigned long long uv;
-    size_t n = 0;
-    if (v < 0) {
-        *buf++ = '-';
-        n++;
-        uv = (unsigned long long)(-(v + 1)) + 1ULL;
-    } else {
-        uv = (unsigned long long)v;
-    }
-    _b_utoa(uv, 10U, 0, buf, len);
-    *len += n;
-}
-
 static void _b_ftoa(double d, int precision, char *buf, size_t *len) {
     long long ip;
     double frac;

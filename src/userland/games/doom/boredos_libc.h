@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #define SEEK_SET 0
 #define SEEK_CUR 1
@@ -19,11 +20,6 @@ extern FILE* stderr;
 extern FILE* stdout;
 extern FILE* stdin;
 
-#define O_RDONLY 1
-#define O_WRONLY 2
-#define O_RDWR   3
-#define O_CREAT  4
-#define O_TRUNC  8
 #define O_BINARY 0
 
 #define F_OK 0

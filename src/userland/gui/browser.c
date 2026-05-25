@@ -895,7 +895,8 @@ static void parse_html(const char *html) {
                         table_float_depth = 0;
                         if (element_count < MAX_ELEMENTS) { RenderElement *el = &elements[element_count++]; memset(el, 0, sizeof(RenderElement)); el->tag = 9; }
                     }
-                    if (table_depth > 0) table_depth--; table_col = 0; 
+                    if (table_depth > 0) table_depth--;
+                    table_col = 0; 
                 }
                 else if (str_iequals(tag_name+1, "tr")) { emit_br(); table_col = 0; }
                 else if (str_iequals(tag_name+1, "td") || str_iequals(tag_name+1, "th")) { 
@@ -1368,7 +1369,8 @@ static void parse_html_incremental(const char *html, int safe_len) {
                         table_float_depth = 0;
                         if (element_count < MAX_ELEMENTS) { RenderElement *el = &elements[element_count++]; memset(el, 0, sizeof(RenderElement)); el->tag = 9; }
                     }
-                    if (table_depth > 0) table_depth--; table_col = 0; 
+                    if (table_depth > 0) table_depth--;
+                    table_col = 0; 
                 }
                 else if (str_iequals(tag_name+1, "tr")) { emit_br(); table_col = 0; }
                 else if (str_iequals(tag_name+1, "td") || str_iequals(tag_name+1, "th")) {
@@ -2129,10 +2131,10 @@ int main(int argc, char **argv) {
         long long now = sys_system(SYSTEM_CMD_GET_TICKS, 0, 0, 0, 0);
         for (int i = 0; i < element_count; i++) {
             if (elements[i].tag == TAG_IMG && elements[i].img_frames && elements[i].img_frame_count > 1) {
-                if (now >= elements[i].next_frame_tick) {
+                if ((uint64_t)now >= elements[i].next_frame_tick) {
                     elements[i].img_current_frame = (elements[i].img_current_frame + 1) % elements[i].img_frame_count;
                     elements[i].next_frame_tick = now + (elements[i].img_delays[elements[i].img_current_frame] * 60 / 1000);
-                    if (elements[i].next_frame_tick <= now) elements[i].next_frame_tick = now + 1;
+                    if (elements[i].next_frame_tick <= (uint64_t)now) elements[i].next_frame_tick = (uint64_t)now + 1;
                     gif_updated = true;
                 }
             }

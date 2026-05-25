@@ -228,6 +228,8 @@ static void notepad_key(ui_window_t win, int h, int legacy, uint32_t codepoint) 
 }
 
 int main(int argc, char **argv) {
+    (void)argc;
+    (void)argv;
     sys_serial_write("Notepad: Starting userspace main...\n");
     ui_window_t win = ui_window_create("Notepad", 100, 100, 400, 300);
 

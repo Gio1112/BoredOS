@@ -56,6 +56,9 @@ INCLUDES := $(patsubst %, -I%, $(INCLUDE_DIRS))
 CFLAGS = -g -O2 -pipe -Wall -Wextra -std=gnu11 -ffreestanding \
          -fno-stack-protector -fno-stack-check -fno-lto -fPIE \
          -m64 -march=x86-64 -msse -msse2 -mstackrealign -mno-red-zone \
+         -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function \
+         -Wno-unused-but-set-variable -Wno-sign-compare -Wno-address \
+         -Wno-type-limits \
          $(INCLUDES)
 
 LDFLAGS = -m elf_x86_64 -nostdlib -static -pie --no-dynamic-linker \

@@ -1586,15 +1586,6 @@ static int execute_builtin(int argc, char *argv[]) {
     return -1;
 }
 
-static bool is_builtin_name(const char *name) {
-    return str_eq(name, "cd") || str_eq(name, "pwd") || str_eq(name, "ls") ||
-           str_eq(name, "cat") || str_eq(name, "echo") || str_eq(name, "clear") ||
-           str_eq(name, "mkdir") || str_eq(name, "rm") || str_eq(name, "touch") ||
-           str_eq(name, "cp") || str_eq(name, "mv") || str_eq(name, "man") ||
-           str_eq(name, "alias") || str_eq(name, "unalias") || str_eq(name, ".") ||
-           str_eq(name, "exit");
-}
-
 typedef enum {
     TOK_WORD = 0,
     TOK_PIPE,

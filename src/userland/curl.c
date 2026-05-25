@@ -57,7 +57,6 @@ int main(int argc, char** argv) {
     }
     hostname[i] = 0;
 
-    int host_len = i;
     if (host_start[i] == ':') {
         i++;
         char port_str[10];

@@ -136,7 +136,7 @@ static int count_display_lines(int physical_line, int available_width) {
         while (char_idx < text_len && segment_len < 254) {
             segment[segment_len] = text[char_idx];
             segment[segment_len + 1] = 0;
-            if (ui_get_string_width(segment) > available_width) break;
+            if ((int)ui_get_string_width(segment) > available_width) break;
             segment_len++;
             char_idx++;
         }
@@ -185,7 +185,7 @@ static void editor_ensure_cursor_visible(void) {
         while (char_idx < text_len && segment_len < 254) {
             segment[segment_len] = text[char_idx];
             segment[segment_len + 1] = 0;
-            if (ui_get_string_width(segment) > available_width) break;
+            if ((int)ui_get_string_width(segment) > available_width) break;
             segment_len++;
             char_idx++;
         }
@@ -450,7 +450,7 @@ static void editor_paint(ui_window_t win) {
             while (char_idx < text_len && segment_len < EDITOR_MAX_LINE_LEN - 2) {
                 segment[segment_len] = text[char_idx];
                 segment[segment_len + 1] = 0;
-                if (ui_get_string_width(segment) > available_width) {
+                if ((int)ui_get_string_width(segment) > available_width) {
                     break;
                 }
                 segment_len++;

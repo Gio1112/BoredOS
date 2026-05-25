@@ -92,7 +92,7 @@ static void clock_paint(void) {
     int tab_h = 24;
 
     for (int i = 0; i < 3; i++) {
-        uint32_t bg = (current_tab == i) ? COLOR_TAB_ACTIVE : COLOR_DARK_PANEL;
+        uint32_t bg = (current_tab == (tab_t)i) ? COLOR_TAB_ACTIVE : COLOR_DARK_PANEL;
         ui_draw_rounded_rect_filled(win_clock, start_x + i * (tab_w + 8), tab_y, tab_w, tab_h, 12, bg);
         int tw = strlen(tabs[i]) * 8;
         ui_draw_string(win_clock, start_x + i * (tab_w + 8) + (tab_w - tw) / 2, tab_y + (tab_h - 8) / 2, tabs[i], COLOR_DARK_TEXT);

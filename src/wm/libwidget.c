@@ -238,14 +238,7 @@ void widget_textbox_draw(widget_context_t *ctx, widget_textbox_t *tb) {
     
     if (ctx->draw_string && tb->text) {
         int max_w = tb->w - 15;
-        int text_w = 0;
-        
-        if (ctx->measure_string_width) {
-            text_w = ctx->measure_string_width(ctx->user_data, tb->text);
-        } else {
-            text_w = (int)text_strlen_utf8(tb->text) * 8;
-        }
-        
+
         // Very basic simple drawing, without proper clipping since context lacks it
         ctx->draw_string(ctx->user_data, tb->x + 5, tb->y + (tb->h - 8) / 2, tb->text, text_color);
         

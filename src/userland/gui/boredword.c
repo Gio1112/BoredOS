@@ -601,7 +601,7 @@ static void export_pdf(void) {
     xref[catalog_obj] = offset;
     WRITE_STR("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
     
-    int pages_obj = obj_count++;
+    obj_count++;
     int page_obj_ids[256];
     int total_pdf_pages = 0;
     
